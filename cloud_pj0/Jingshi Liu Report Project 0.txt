@@ -1,0 +1,72 @@
+
+Here is a specification of the steps, commands, observations, and problems I faced.
+I used AWS CLI V2 shell to do the operations.
+The key-pair I created is named: cloudp0
+Cost Estimation Detail is in Step 7, Total is $0.00232
+
+Step 2: Create Instance	from Preconfigured AMI			2:46
+	Command: aws ec2 run-instances --image-id ami-0ff8a91507f77f867 --instance-type t2.micro --key-name cloudp0
+	
+	Pre-configured AMI: ami-0ff8a91507f77f867
+	Returned Values:
+		Instance ID: i-08dcbf8495766346f
+		Public DNS Name: ec2-44-197-246-116.compute-1.amazonaws.com
+
+	Observation:
+		--key-name parameter is not required to create the instance, but it is needed to ssh into the instance.
+		Forgetting to add the --key-name parameter will throw an error about (publickey) that stops user to access
+		the instance. Therefore, do not skip it.
+
+Step 3:	Wait the Instance to be initialized			2:48
+	Command: ssh -i cloudp0.pem ec2-user@ec2-35-174-207-107.compute-1.amazonaws.com
+
+Step 4: Download some app on Linux 				2:50
+	sudo yum install -y perl emacs
+	logout
+
+	Observation:
+		Linux stops user to download apps directly unless you are the root user.
+		Adding keyword "sudo" will do the command as root user.
+
+
+Step 5: Create Image						2:51
+	aws ec2 create-image --instance-id i-08dcbf8495766346f --name cloudp0_test_image
+	Returned Values:
+		AMI ID: ami-0f342d7605fcdee91
+	
+	Observation: 
+		Before moving to Step 6, you must wait until the AMI is been created and is in available state, 
+		because creating new AMI involves copying data from the instance. Therefore, terminating the instance 
+		before the AMI is available, will cause AMI to stuck in pending state forever. Additionally, instance 
+		is not usable during the creation of AMI.
+
+Step 6: Terminate Instance from Step 2				2:56
+	Create Instance base on the newly created ImageID
+	AMI from Step 5 is pending, waiting to be available	
+	
+	Command: aws ec2 terminate-instances --instance-id i-08dcbf8495766346f	
+		 aws ec2 run-instances --image-id ami-0f342d7605fcdee91 --instance-type t2.micro --key-name cloudp0
+	Returned Values:
+		Instance ID: i-01bdb9a7c84d50f90
+		 
+	Observation:
+		Sometimes, it ask for SnapshotID or Volume size. Not sure why it happens, maybe due to the instance terminated 
+		before the AMI is available. 
+Step 6.5: Terminate the New Instance
+	Command: aws ec2 terminate-instances --instance-id i-01bdb9a7c84d50f90
+
+Step 7: Compute cost						2:58
+	
+	Instance Type		Hourly Rate(On demand)		Charge Basis
+	t2.micro		$0.0116				Per-second
+	
+	First Instance(Step 2 - 6) run time: 10 min (2:46 - 2:56)
+	Second Instance(Step 6)	   run time: 2 min (2:56 - 2:58)
+	Total Run Time: 12 min
+	Total Cost: (12 min/ 60 min) * $0.0116 = $0.00232
+
+
+Step 8: Clean up
+	Command:
+		aws ec2 deregister-image --image-id ami-0f342d7605fcdee91
+		aws ec2 delete-snapshot --snapshot-id snap-033528c08e92417f9
