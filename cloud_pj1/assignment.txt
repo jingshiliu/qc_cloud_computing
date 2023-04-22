@@ -1,0 +1,23 @@
+Project 1: Kubernetes Cluster
+Due: March 19, 11:59 PM
+
+The purpose of this project is to get yourself familiar with setting up a Kubenetes cluster and orchestrating containers in a Kubenetes cluster. You can choose any cloud platforms such as AWS, GCP, and Azure.
+
+This project includes a series of tasks. Note that such tasks are very generally defined, so you will need to specify more details (e.g., in the context of some particular application or scenario).
+
+You are expected to find the solution of each task from online documents (e.g., Kubenetes official document). 
+
+Task 1: Launch a Kubenetes cluster. You will need to configure the cluster with one master and at least two workers. You can build your own cluster from scratch on virtual machines, or use cloud-based Kubernetes services such as AWS EKS, Azure Kubernetes Service, or Google Kubernetes Engine.
+
+Task 2: Deploy a contaierized application which run multiple instances of the same container.
+
+Task 3: Scale the pod to more container instances.
+
+Task 4: Update the application with a new software version.
+
+Task 5: Delete the application and stop the Kubenetes cluster.
+
+Submit a report on Blackboard. the report should include the commands you run, code in any configuration file(s), your observations, and output from all the steps in each task. Also explain the purpose of each step in your report.
+
+ 
+

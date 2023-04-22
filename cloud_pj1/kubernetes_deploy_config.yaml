@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qc-cloud-pj1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: qc-cloud-pj1
+  template:
+    metadata:
+      labels:
+        app: qc-cloud-pj1
+    spec:
+      containers:
+        - name: qc-cloud-pj1
+          image: jingshiliu/getting-started:latest
