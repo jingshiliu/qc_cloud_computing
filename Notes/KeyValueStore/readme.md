@@ -161,7 +161,7 @@ A **problem** with consistent hashing is that nodes are not likely to be distrib
   
 
 <img src="images/7.png" width="700"/> 
-a
+
 
 ### Case Study - Amazon Dynamo Key-Value Store
 
