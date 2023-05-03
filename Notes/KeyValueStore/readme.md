@@ -160,8 +160,8 @@ A **problem** with consistent hashing is that nodes are not likely to be distrib
   - if hops to the largest node that is smaller than key in the table, it means goal node is in the other half
   
 
-<img src="images/7.png" width="700"/>
-
+<img src="images/7.png" width="700"/> 
+a
 
 ### Case Study - Amazon Dynamo Key-Value Store
 
