@@ -200,7 +200,7 @@ A **problem** with consistent hashing is that nodes are not likely to be distrib
 
 ##### Hinted Handoff
 
-pass data beyond N nodes(replicas) if they fail to reach W or R success. usually are on preference list
+pass data beyond N nodes(replicas) if they fail to reach W or R success. usually are on preference list. Then perodically try to forward the data to the intended replica node.
 
 <img src="images/8.png" width="700"/>
 
